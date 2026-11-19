@@ -1,0 +1,1555 @@
+<title>Geometry Homework</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+/* Phone safety net: never scroll sideways */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; max-width: 100%; overflow-x: hidden; }
+body { max-width: 100%; overflow-x: hidden; overflow-wrap: break-word; }
+svg, img { max-width: 100%; }
+.scroll { max-width: 100%; }
+@media (max-width: 560px) {
+  .masthead { padding: 18px 14px; }
+  .col { padding: 14px 14px 16px; }
+  .remember { padding: 12px 14px; }
+  .trail { padding-inline: 0; }
+  th, td { overflow-wrap: anywhere; }
+}
+</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: a two-column worksheet grid. Each card pairs a worked "Sample Question" with a "Now You Try" twin, then a "Remember" strip. Questions 7 to 10 span the full width. */
+:root {
+  --bg: #eef2f8;
+  --ink: #1b2230;
+  --muted: #566074;
+  --line: #1b2230;
+  --head: #cfe3f7;
+  --sample: #e8f0fa;
+  --sample-tag: #b9d6f2;
+  --try: #e6f3ea;
+  --try-tag: #b5e6cc;
+  --try-rule: #7fb796;
+  --remember: #fadadd;
+  --red: #b3202a;
+  --note: #fdf1c4;
+  --note-rule: #f0a62b;
+  --thead: #fdf0bd;
+  --paper: #ffffff;
+  --ell-fill: rgba(70, 120, 220, 0.16);
+  --ell-line: #3454b4;
+  --badge-bg: #111722;
+  --badge-fg: #ffffff;
+  --challenge: #f5a623;
+  --challenge-fg: #1b1200;
+  --font-display: "Bitter", Georgia, "Times New Roman", serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151c; --ink: #e8ecf3; --muted: #a2adc0; --line: #cfd7e6;
+    --head: #1d3550; --sample: #172435; --sample-tag: #28486b;
+    --try: #16281e; --try-tag: #29583e; --try-rule: #3f7a58;
+    --remember: #3a1e22; --red: #ff909a; --note: #3a3216; --note-rule: #d29a2e;
+    --thead: #3a3416; --paper: #1a2029;
+    --ell-fill: rgba(120, 160, 255, 0.18); --ell-line: #8fb0ff;
+    --badge-bg: #e8ecf3; --badge-fg: #11151c;
+    --challenge: #f5a623; --challenge-fg: #1b1200;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151c; --ink: #e8ecf3; --muted: #a2adc0; --line: #cfd7e6;
+  --head: #1d3550; --sample: #172435; --sample-tag: #28486b;
+  --try: #16281e; --try-tag: #29583e; --try-rule: #3f7a58;
+  --remember: #3a1e22; --red: #ff909a; --note: #3a3216; --note-rule: #d29a2e;
+  --thead: #3a3416; --paper: #1a2029;
+  --ell-fill: rgba(120, 160, 255, 0.18); --ell-line: #8fb0ff;
+  --badge-bg: #e8ecf3; --badge-fg: #11151c;
+  --challenge: #f5a623; --challenge-fg: #1b1200;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-block: 24px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.sheet { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+
+/* Header */
+.masthead {
+  background: var(--head);
+  border: 3px solid var(--line);
+  border-radius: 22px;
+  padding: 22px 20px;
+  text-align: center;
+}
+.masthead h1 { font-size: clamp(1.4rem, 4.2vw, 2.3rem); font-weight: 700; letter-spacing: 0.01em; }
+.masthead .sub { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.1rem, 2.8vw, 1.5rem); margin-top: 6px; }
+.masthead .meta { color: var(--muted); margin-top: 2px; }
+.masthead .meta b { color: var(--ink); letter-spacing: 0.06em; }
+
+/* Criteria */
+.table-wrap { border: 3px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--paper); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 0; }
+th, td { text-align: left; padding: 12px 18px; vertical-align: middle; }
+th { background: var(--thead); font-family: var(--font-display); font-size: 1.15rem; border-bottom: 2px solid var(--line); }
+th:first-child, td:first-child { border-right: 2px solid var(--line); width: 56%; }
+tbody tr + tr td { border-top: 2px solid var(--line); }
+
+/* Cards */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.card {
+  position: relative;
+  border: 3px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--sample);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.card.wide { grid-column: 1 / -1; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); flex: 1; }
+.col { padding: 16px 18px 18px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.col.sample { background: var(--sample); }
+.col.try { background: var(--try); border-left: 3px solid var(--try-rule); }
+.tag-row { display: flex; align-items: center; gap: 10px; }
+.badge {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--badge-bg); color: var(--badge-fg);
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+}
+.tag {
+  flex: 1; text-align: center; padding: 6px 10px; border-radius: 10px;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+}
+.sample .tag { background: var(--sample-tag); }
+.try .tag { background: var(--try-tag); }
+.col.try .tag-row { padding-left: 0; }
+.q { margin: 0; }
+.q b { font-weight: 600; }
+.opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.opts li { display: flex; gap: 8px; }
+.opts .k { font-weight: 600; flex: none; }
+.diagram { display: block; width: 100%; max-width: 360px; height: auto; margin-inline: auto; color: var(--ink); }
+.answer { margin: 0; }
+.answer .a { color: var(--red); font-weight: 700; }
+.explain { margin: 0; }
+.explain b { font-weight: 600; }
+.remember {
+  background: var(--remember); color: var(--red);
+  padding: 12px 18px; border-top: 2px solid var(--line);
+  line-height: 1.5;
+}
+.remember b { font-weight: 700; }
+.badge-challenge {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  background: var(--challenge); color: var(--challenge-fg);
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  padding: 3px 14px; border-radius: 0 0 10px 10px; border: 2px solid var(--line); border-top: 0;
+  z-index: 1;
+}
+.note {
+  background: var(--note); border-left: 4px solid var(--note-rule);
+  padding: 8px 12px; font-size: 0.95rem; border-radius: 4px;
+}
+.note b { font-weight: 600; }
+
+/* Student inputs */
+.choices { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.choices label {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  padding: 4px 8px; margin-inline: -8px; border-radius: 8px;
+}
+.choices label:hover { background: rgba(127, 183, 150, 0.2); }
+.choices input { accent-color: var(--ell-line); width: 18px; height: 18px; flex: none; }
+.blank-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.blank-row label { font-weight: 600; }
+.blank {
+  font: inherit; color: var(--ink); background: transparent;
+  border: 0; border-bottom: 2px solid var(--ink);
+  min-width: 0; width: min(11em, 100%); padding: 2px 4px; border-radius: 0;
+}
+.blank:focus-visible, .choices input:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 2px; }
+.ans-label { font-weight: 700; }
+
+/* SVG */
+.ln { stroke: var(--ink); stroke-width: 1.7; fill: none; stroke-linecap: round; }
+.dash { stroke: var(--ink); stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; }
+.rd { stroke: var(--red); stroke-width: 1.8; fill: none; }
+.lbl { fill: var(--ink); font-family: var(--font-body); font-style: italic; font-size: 17px; }
+.rlbl { fill: var(--red); font-family: var(--font-display); font-weight: 700; font-size: 14px; }
+.qm { fill: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.cap { fill: var(--muted); font-family: var(--font-body); font-size: 10.5px; }
+.nm { fill: var(--muted); font-family: var(--font-body); font-size: 12px; }
+.sh { fill: var(--ink); font-family: var(--font-display); font-weight: 700; font-size: 12px; }
+.ell { fill: var(--ell-fill); stroke: var(--ell-line); stroke-width: 1.4; }
+
+/* Student details popup */
+.who { margin-top: 10px; font-weight: 600; display: flex; justify-content: center; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.link-btn { font: inherit; font-weight: 600; color: var(--ell-line); background: none; border: 0; padding: 2px 4px; cursor: pointer; text-decoration: underline; }
+.link-btn:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 2px; }
+.overlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(10, 16, 28, 0.62);
+  display: grid; place-items: center;
+  padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-y: auto;
+}
+.overlay[hidden] { display: none; }
+.modal {
+  width: min(460px, 100%);
+  background: var(--paper);
+  border: 3px solid var(--line);
+  border-radius: 20px;
+  padding: 22px 22px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.modal h2 { font-size: 1.35rem; }
+.modal p { margin: 0; color: var(--muted); }
+.modal .actions { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.start-btn {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+  color: var(--badge-fg); background: var(--badge-bg);
+  border: 0; border-radius: 12px; padding: 12px 18px; cursor: pointer;
+}
+.start-btn:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 3px; }
+.err { color: var(--red); font-weight: 600; min-height: 1.4em; margin: 0; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label { font-family: var(--font-display); font-weight: 500; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.field input {
+  font: inherit; color: var(--ink); background: var(--sample);
+  border: 2px solid var(--line); border-radius: 10px;
+  padding: 8px 12px; min-width: 0; width: 100%;
+}
+.phone-wrap { display: flex; align-items: stretch; border: 2px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--sample); }
+.phone-wrap:focus-within { outline: 3px solid var(--ell-line); outline-offset: 2px; }
+.phone-wrap .cc { display: flex; align-items: center; padding: 8px 12px; background: var(--head); border-right: 2px solid var(--line); font-family: var(--font-display); font-weight: 700; user-select: none; -webkit-user-select: none; }
+.field .phone-wrap input { border: 0; border-radius: 0; background: transparent; flex: 1; min-width: 0; width: auto; }
+.field .phone-wrap input:focus-visible { outline: none; }
+.field input::placeholder { color: var(--muted); opacity: 0.8; }
+.field input:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 2px; }
+
+.topic {
+  background: var(--head); border-bottom: 2px solid var(--line);
+  padding: 7px 18px; font-family: var(--font-display); font-weight: 500;
+  font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.topic b { font-weight: 700; }
+.card.wide .topic { padding-right: 130px; }
+.submit-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 8px 0 4px; }
+.submit-card .start-btn { width: min(100%, 360px); }
+.submit-card .start-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.submit-msg { margin: 0; text-align: center; font-weight: 600; min-height: 1.5em; }
+.submit-msg.bad { color: var(--red); }
+.submit-msg.good { color: var(--ink); }
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  /* Larger popups on phones */
+  .modal { width: 100%; padding: 30px 22px 32px; gap: 18px; }
+  .modal h2 { font-size: 1.7rem; }
+  .modal p { font-size: 1.05rem; }
+  .modal .field label { font-size: 0.95rem; }
+  .modal .field input { font-size: 1.2rem; padding: 15px 14px; border-radius: 12px; }
+  .modal .phone-wrap { border-radius: 12px; }
+  .modal .phone-wrap .cc { font-size: 1.2rem; padding: 15px 14px; }
+  .modal .start-btn { font-size: 1.2rem; padding: 17px 20px; }
+  .err { font-size: 1.05rem; }
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .col.try { border-left: 0; border-top: 3px solid var(--try-rule); }
+  th, td { padding: 10px 12px; }
+  th:first-child, td:first-child { width: 50%; }
+  .badge-challenge { left: auto; right: 14px; transform: none; }
+}
+</style>
+
+<style>
+/* Results dashboard tokens and styles */
+:root { --good: #17794a; --good-bg: #dcf1e5; --bad-bg: #fbe1e4; --ring-bg: #d3dbe8; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --good: #6fdca0; --good-bg: #15321f; --bad-bg: #3a1e22; --ring-bg: #2a3547; }
+}
+:root[data-theme="dark"] { --good: #6fdca0; --good-bg: #15321f; --bad-bg: #3a1e22; --ring-bg: #2a3547; }
+
+.res-head { background: var(--head); border: 3px solid var(--line); border-radius: 22px; padding: 22px 20px; text-align: center; }
+.res-head h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+.res-eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.res-who { margin-top: 6px; font-weight: 600; }
+.overview { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 20px; }
+.ring-card { background: var(--paper); border: 3px solid var(--line); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.ring { width: min(100%, 190px); height: auto; }
+.ring-bg { fill: none; stroke: var(--ring-bg); stroke-width: 12; }
+.ring-fg { fill: none; stroke: var(--good); stroke-width: 12; stroke-linecap: round; }
+.ring.low .ring-fg { stroke: var(--red); }
+.ring-num { font-family: var(--font-display); font-weight: 700; font-size: 28px; fill: var(--ink); }
+.ring-pct { font-family: var(--font-body); font-size: 14px; fill: var(--muted); }
+.verdict { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; text-align: center; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.stat { background: var(--paper); border: 3px solid var(--line); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: center; gap: 2px; min-width: 0; }
+.stat .k { font-family: var(--font-display); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stat .v small { font-size: 1rem; font-weight: 500; color: var(--muted); }
+.panel { background: var(--paper); border: 3px solid var(--line); border-radius: 18px; padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.panel h2 { font-size: 1.15rem; }
+.tmap { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tile { border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; border: 2px solid transparent; min-width: 0; }
+.tile.good { background: var(--good-bg); border-color: var(--good); }
+.tile.bad { background: var(--bad-bg); border-color: var(--red); }
+.tile .tq { font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; }
+.tile .tn { font-weight: 600; line-height: 1.25; }
+.tile .ts { font-size: 0.85rem; font-weight: 700; }
+.tile.good .ts { color: var(--good); }
+.tile.bad .ts { color: var(--red); }
+.rev { border-left: 4px solid var(--red); background: var(--bad-bg); padding: 10px 14px; border-radius: 6px; }
+.rev h3 { font-size: 1rem; }
+.rev p { margin: 4px 0 0; }
+.allgood { background: var(--good-bg); border-left: 4px solid var(--good); padding: 10px 14px; border-radius: 6px; font-weight: 600; }
+.qrev { border: 2px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.qh { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: var(--head); flex-wrap: wrap; }
+.qh .qn { font-family: var(--font-display); font-weight: 700; }
+.qh .qt { font-weight: 600; min-width: 0; }
+.pill-res { margin-left: auto; font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; padding: 2px 10px; border-radius: 999px; border: 1.5px solid; }
+.pill-res.good { background: var(--good-bg); color: var(--good); border-color: var(--good); }
+.pill-res.bad { background: var(--bad-bg); color: var(--red); border-color: var(--red); }
+.qb { padding: 10px 14px 12px; display: grid; gap: 4px; }
+.qb .why { color: var(--muted); margin-top: 4px; }
+.back-row { display: flex; justify-content: center; }
+.back-row .start-btn { width: min(100%, 360px); }
+.res-overlay { place-items: start center; grid-template-columns: minmax(0, 1fr); overflow-x: hidden; }
+.res-modal {
+  position: relative; width: min(880px, 100%); min-width: 0; box-sizing: border-box; margin-block: auto; margin-inline: auto;
+  background: var(--bg); border: 3px solid var(--line); border-radius: 22px;
+  padding: 54px 18px 22px;
+}
+.x-btn {
+  position: absolute; top: 10px; right: 12px; width: 38px; height: 38px;
+  border-radius: 50%; border: 2px solid var(--line); background: var(--paper); color: var(--ink);
+  font-size: 1.5rem; line-height: 1; cursor: pointer;
+}
+.res-modal .sheet, .res-modal .panel, .res-modal .overview, .res-modal .ring-card, .res-modal .stats { min-width: 0; max-width: 100%; }
+@media (max-width: 480px) { .res-modal { padding: 52px 10px 18px; border-radius: 18px; } .res-overlay { padding-left: 8px; padding-right: 8px; } }
+.x-btn:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 2px; }
+@media (max-width: 700px) { .overview { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<style>
+/* Results dashboard: livelier palette, motion and layout */
+:root { --t1: #2f6fe4; --t2: #e8742c; --t3: #12a594; --t4: #d8408f; --t5: #c98f00; --head2: #d3ecd0; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --t1: #7aa7ff; --t2: #ffa066; --t3: #4fd8c7; --t4: #ff8cc0; --t5: #ffd166; --head2: #1d3d3a; }
+}
+:root[data-theme="dark"] { --t1: #7aa7ff; --t2: #ffa066; --t3: #4fd8c7; --t4: #ff8cc0; --t5: #ffd166; --head2: #1d3d3a; }
+
+.res-head { position: relative; overflow: hidden; background: linear-gradient(115deg, var(--head) 30%, var(--head2)); }
+.res-head > * { position: relative; }
+.proto { position: absolute !important; right: -10px; bottom: -34px; width: 210px; height: auto; opacity: 0.35; color: var(--ell-line); pointer-events: none; }
+.res-head h1 { margin-top: 2px; }
+.stars { width: 150px; height: auto; display: block; margin: 8px auto 0; }
+.star { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-linejoin: round; }
+.star.on { fill: var(--t5); stroke: var(--t5); transform-box: fill-box; transform-origin: center; animation: pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) backwards; animation-delay: calc(0.5s + var(--i) * 0.12s); }
+.ring-fg { animation: ringfill 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards; }
+.ring-card { background: linear-gradient(180deg, var(--paper), color-mix(in srgb, var(--good) 8%, var(--paper))); }
+.ring.low ~ .verdict { color: var(--red); }
+.stat { border-top-width: 3px; position: relative; }
+.stat::before { content: ""; position: absolute; left: -3px; right: -3px; top: -3px; height: 8px; background: var(--sc, var(--t1)); border-radius: 14px 14px 0 0; }
+.stat .k { padding-top: 6px; }
+.trail { display: flex; justify-content: space-between; gap: 4px; padding: 4px 6px 0; }
+.step { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; }
+.step:not(:last-child)::after { content: ""; position: absolute; top: 18px; left: calc(50% + 22px); right: calc(-50% + 22px); height: 3px; background: var(--ring-bg); border-radius: 2px; }
+.step.good:not(:last-child)::after { background: var(--good); }
+.dot { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.05rem; border: 2.5px solid; animation: pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1) backwards; animation-delay: calc(0.3s + var(--i) * 0.12s); }
+.step.good .dot { background: var(--good-bg); color: var(--good); border-color: var(--good); }
+.step.bad .dot { background: var(--bad-bg); color: var(--red); border-color: var(--red); }
+.step .lab { font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; }
+.streak-note { margin: 0; color: var(--muted); }
+.tile { border-left: 7px solid var(--th); border-top-color: transparent; border-right-color: transparent; border-bottom-color: transparent; background: color-mix(in srgb, var(--th) 13%, var(--paper)); transition: transform 0.15s; }
+.tile.good, .tile.bad { border-color: transparent; border-left-color: var(--th); background: color-mix(in srgb, var(--th) 13%, var(--paper)); }
+.tile:hover { transform: translateY(-2px); }
+.tile .tq { color: var(--th); font-size: 0.85rem; }
+.tile .ts::before { content: ""; display: inline-block; width: 0.7em; height: 0.7em; border-radius: 50%; margin-right: 6px; background: currentColor; }
+.next { display: flex; gap: 12px; align-items: center; background: var(--note); border: 2px solid var(--note-rule); border-radius: 14px; padding: 12px 16px; font-weight: 600; }
+.next svg { flex: none; width: 28px; height: 28px; color: var(--note-rule); }
+.qrev { transition: box-shadow 0.15s; }
+.qrev.good { border-color: var(--good); }
+.qrev.bad { border-color: var(--red); }
+.qrev > summary { list-style: none; cursor: pointer; }
+.qrev > summary::-webkit-details-marker { display: none; }
+.qrev > summary::after { content: "\25BE"; font-size: 1.1rem; transition: transform 0.2s; }
+.qrev[open] > summary::after { transform: rotate(180deg); }
+.qrev > summary:focus-visible { outline: 3px solid var(--ell-line); outline-offset: -3px; }
+.panel, .overview, .res-head, .next { animation: rise 0.5s ease-out backwards; }
+.panel:nth-of-type(1) { animation-delay: 0.15s; }
+.confetti { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 80; }
+.confetti i { position: absolute; top: -16px; width: 9px; height: 15px; border-radius: 2px; animation: fall linear forwards; }
+@keyframes ringfill { from { stroke-dasharray: 0 400; } }
+@keyframes pop { from { transform: scale(0.3); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes rise { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes fall { to { transform: translate(var(--x), 105vh) rotate(var(--r)); } }
+@media (prefers-reduced-motion: reduce) {
+  .ring-fg, .star.on, .dot, .panel, .overview, .res-head, .next { animation: none; }
+  .tile { transition: none; }
+}
+@media (max-width: 480px) { .proto { width: 150px; } .step:not(:last-child)::after { left: calc(50% + 20px); right: calc(-50% + 20px); } }
+
+/* Class-wise rankings buttons on the first popup + ranking popup */
+.rank-entry { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; padding-top: 14px; border-top: 2px dashed color-mix(in srgb, var(--line) 35%, transparent); }
+.rank-entry .re-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+.rank-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rank-open { font-family: var(--font-display); font-weight: 700; font-size: 1rem; line-height: 1.3; color: var(--ink); background: var(--paper); border: 3px solid var(--line); border-radius: 12px; padding: 11px 8px; cursor: pointer; }
+.rank-open:hover { background: color-mix(in srgb, var(--t1) 14%, var(--paper)); }
+.rank-open:focus-visible { outline: 3px solid var(--ell-line); outline-offset: 3px; }
+.rank-modal { position: relative; padding-top: 54px; width: min(520px, 100%); max-height: none; }
+.rank-modal h2 { padding-right: 8px; }
+#rank-overlay { z-index: 60; place-items: start center; grid-template-columns: minmax(0, 1fr); }
+#rank-overlay .rank-modal { margin-block: auto; margin-inline: auto; min-width: 0; box-sizing: border-box; }
+</style>
+
+<style>
+/* Results: answer review first, analytics after, compact header */
+.res-head { padding: 12px 16px !important; }
+.res-head h1 { font-size: clamp(1.15rem, 4vw, 1.6rem) !important; margin: 0 !important; }
+.res-head .res-eyebrow { font-size: 0.8rem; }
+.res-head .res-who { margin-top: 2px; }
+.res-head .stars { width: 210px; max-width: 100%; margin-top: 4px; }
+.res-head .proto { width: 120px; bottom: -26px; }
+.an-title { font-size: 1.3rem; margin: 10px 4px 0; padding-top: 14px; border-top: 3px dashed var(--line); }
+/* Ten questions: slightly tighter answer trail */
+.trail .dot { width: 30px; height: 30px; font-size: 0.95rem; }
+.step:not(:last-child)::after { top: 15px; left: calc(50% + 17px); right: calc(-50% + 17px); }
+@media (max-width: 480px) {
+  .trail .dot { width: 26px; height: 26px; font-size: 0.85rem; }
+  .step:not(:last-child)::after { top: 13px; left: calc(50% + 15px); right: calc(-50% + 15px); }
+  .step .lab { font-size: 0.7rem; letter-spacing: 0; }
+}
+
+/* Score ring card shown at the top of results (PC + mobile) */
+.top-analytics { margin: 14px 0 6px; animation: rise 0.5s ease-out backwards; }
+.top-analytics .an-title.an-top { margin: 0 4px 10px; padding-top: 0; border-top: 0; }
+.top-analytics .ring-card { width: 100%; max-width: 280px; margin: 0 auto; }
+.overview-stats { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 480px) { .top-analytics .ring-card { max-width: 100%; } }
+
+/* Class ranking panel */
+.rank-sub { margin: -4px 0 0; color: var(--muted); font-size: 0.9rem; }
+.rank-note, .rank-msg { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.rank-hero { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 12px; padding: 12px 14px; border-radius: 14px; border: 2px solid var(--note-rule); background: color-mix(in srgb, var(--note-rule) 16%, var(--paper)); text-align: center; }
+.rank-hero b { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--ink); }
+.rank-hero span { color: var(--muted); font-size: 0.95rem; }
+
+.rank-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rank-row { position: relative; flex: 0 0 auto; min-height: 48px; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 12px; border: 2px solid color-mix(in srgb, var(--line) 22%, transparent); border-radius: 12px; background: var(--paper); overflow: hidden; }
+.rank-row .fill { position: absolute; inset: 0 auto 0 0; width: var(--w, 0%); background: color-mix(in srgb, var(--t1) 24%, transparent); animation: rankgrow 0.8s ease-out backwards; }
+@keyframes rankgrow { from { width: 0; } }
+.rank-row > :not(.fill) { position: relative; }
+.rank-row .rk { font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; line-height: 1.4; text-align: center; background: var(--badge-bg); color: var(--badge-fg); border-radius: 999px; padding: 3px 0; }
+.rank-row .rn { font-weight: 600; line-height: 1.5; padding: 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-row .rs { font-family: var(--font-display); font-weight: 700; line-height: 1.4; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rank-row .rs small { color: var(--muted); font-weight: 500; }
+.rank-row { color: var(--ink); }
+.rank-row.r1 .rk { background: #f5a623; color: #11151c; }
+.rank-row.r2 .rk { background: #c3cad6; color: #11151c; }
+.rank-row.r3 .rk { background: #d99a66; color: #11151c; }
+.rank-row.me { border-color: var(--note-rule); background: color-mix(in srgb, var(--note-rule) 14%, var(--paper)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--note-rule) 35%, transparent); }
+.rank-row.me .fill { background: color-mix(in srgb, var(--note-rule) 30%, transparent); }
+.rank-row.me .rn::after { content: "You"; display: inline-block; vertical-align: middle; font-size: 0.72rem; font-weight: 700; line-height: 1.5; color: var(--badge-fg); background: var(--badge-bg); padding: 0 9px; border-radius: 999px; margin-left: 10px; }
+@media (max-width: 480px) { .rank-row { grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; padding: 8px 10px; } .rank-row.me .rn::after { margin-left: 8px; padding: 0 8px; } }
+@media (prefers-reduced-motion: reduce) { .rank-row .fill { animation: none; } }
+
+/* Loading bar for rankings */
+.rank-loading { display: flex; flex-direction: column; gap: 10px; }
+.rank-loading .bar { position: relative; height: 12px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--line) 15%, var(--paper)); border: 2px solid color-mix(in srgb, var(--line) 30%, transparent); }
+.rank-loading .bar::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 35%; border-radius: 999px; background: linear-gradient(90deg, var(--t1, #3454b4), var(--t3, #2f9e6e)); animation: rankslide 1.2s ease-in-out infinite; }
+@keyframes rankslide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+@media (prefers-reduced-motion: reduce) { .rank-loading .bar::before { animation: none; width: 100%; opacity: 0.5; } }
+
+/* Scroll back to the first unanswered question */
+.col.try { scroll-margin-top: 14px; }
+.col.try.missed { animation: missedflash 1.8s ease-out; }
+@keyframes missedflash { 0%, 60% { box-shadow: 0 0 0 4px var(--red); } 100% { box-shadow: 0 0 0 4px transparent; } }
+@media (prefers-reduced-motion: reduce) { .col.try.missed { animation: none; box-shadow: 0 0 0 4px var(--red); } }
+
+/* First popup: compact so it fits one phone screen, never scrolls sideways */
+.overlay, .modal { box-sizing: border-box; max-width: 100%; }
+.overlay { overflow-x: hidden; }
+#details .err:empty { display: none; }
+#details .err { min-height: 0; }
+@media (max-width: 560px) {
+  #details { padding: 16px 16px 16px; gap: 9px; }
+  #details h2 { font-size: 1.3rem; }
+  #details > p:not(.err) { font-size: 0.95rem; margin-top: -4px; }
+  #details .field { gap: 3px; }
+  #details .field label { font-size: 0.78rem; }
+  #details .field input { font-size: 1.05rem; padding: 9px 12px; border-radius: 10px; }
+  #details .phone-wrap { border-radius: 10px; }
+  #details .phone-wrap .cc { font-size: 1.05rem; padding: 9px 12px; }
+  #details .actions { margin-top: 2px; }
+  #details .start-btn { font-size: 1.1rem; padding: 12px 16px; }
+  #details .err { font-size: 0.9rem; }
+  #details .rank-entry { margin-top: 2px; padding-top: 10px; gap: 6px; }
+  #details .rank-entry .re-title { font-size: 0.85rem; }
+  #details .rank-btns { gap: 8px; }
+  #details .rank-open { font-size: 0.95rem; padding: 9px 6px; border-width: 2px; border-radius: 10px; white-space: nowrap; }
+  #details .rank-open br { display: none; }
+  .overlay { padding-top: 10px; padding-bottom: 10px; }
+}
+@media (max-width: 560px) and (max-height: 640px) {
+  #details { gap: 6px; padding: 12px 14px; }
+  #details .field input, #details .phone-wrap .cc { padding: 7px 10px; }
+  #details .start-btn { padding: 10px 14px; }
+}
+</style>
+<style>
+.exam-imp { margin: 0; text-align: center; color: var(--red); font-family: var(--font-display); font-weight: 700; font-size: clamp(1.3rem, 4.5vw, 2rem); letter-spacing: 0.08em; text-transform: uppercase; border: 3px solid var(--red); border-radius: 14px; padding: 8px 12px; background: var(--paper); }
+</style>
+<style>
+/* Fill-in answer boxes */
+.blank-row { margin-top: 4px; }
+.blank { font-size: 1.1rem; font-weight: 600; width: min(9em, 100%); border-bottom-width: 3px; }
+.blank-row .unit { font-weight: 700; }
+.ans-hint { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.col.sample .q + .q { margin-top: -2px; }
+</style>
+<style>.big-row{flex-wrap:nowrap;align-items:center;gap:10px}.blank.big{flex:1;width:100%;font-size:1.5rem;padding:16px 18px;border:3px solid var(--line);border-radius:14px;background:var(--paper)}.blank.big::placeholder{color:var(--muted);font-size:1.1rem;font-weight:500}.big-row .unit{font-size:1.5rem}.halo{paint-order:stroke;stroke:var(--sample);stroke-width:4px;stroke-linejoin:round}</style>
+<main class="sheet" id="homework">
+
+  <p class="exam-imp">Exam Important</p>
+
+  <header class="masthead">
+    <h1>HOMEWORK ASSIGNMENT – 18 November 2026</h1>
+    <div class="sub">Geometry (Class 8)</div>
+    <div class="meta">Session: 2026 – 27</div>
+    <div class="meta"><b>TOTAL MARKS: 1</b></div>
+    <div class="who" id="who" hidden>
+      <span id="who-text"></span>
+      <button type="button" class="link-btn" id="who-edit">Edit</button>
+    </div>
+  </header>
+
+  <section class="table-wrap" aria-label="Marking criteria">
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Criteria</th><th>Marks</th></tr></thead>
+        <tbody>
+          <tr><td>Self-attempted all questions</td><td>1 mark (even if all answers are wrong)</td></tr>
+          <tr><td>No attempt / Solved by tuition teacher / Copied from friends / Absent on submission day</td><td>0 mark</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="grid">
+    <article class="card" aria-labelledby="q1h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q1h">1</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 100°, bend angle 120°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M168.1 22.4 L182.2 102.0 L97.9 172.7"/><path class="rd" d="M150.7 48.0 A22 22 0 0 0 176.5 69.7"/><text class="rlbl halo" x="128.7" y="63.5" text-anchor="middle" style="font-size:13px">100°</text><path class="rd" d="M178.7 82.3 A20 20 0 0 0 166.9 114.9"/><text class="rlbl halo" x="140.8" y="91.5" text-anchor="middle" style="font-size:13px">120°</text><path class="rd" d="M139.8 156.0 A22 22 0 0 0 134.7 141.9"/><text class="qm halo" x="151.8" y="149.5" text-anchor="middle">?</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">40°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 100° angle and the upper part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the upper part is 180° − 100° = 80°. The bend angle is 120°, so the lower part is 120° − 80° = 40°. The lower part and the bottom angle are alternate angles, so the bottom angle is 40°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 110°, bend angle 135°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M166.0 23.6 L137.4 102.0 L173.6 179.6"/><path class="rd" d="M179.1 48.0 A22 22 0 0 1 149.5 68.7"/><text class="rlbl halo" x="201.1" y="63.5" text-anchor="middle" style="font-size:13px">110°</text><path class="rd" d="M144.3 83.2 A20 20 0 0 1 145.9 120.1"/><text class="rlbl halo" x="179.4" y="104.7" text-anchor="middle" style="font-size:13px">135°</text><path class="rd" d="M140.6 156.0 A22 22 0 0 1 153.3 136.1"/><text class="qm halo" x="128.6" y="149.5" text-anchor="middle">?</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t1" name="t1" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 1 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the upper part from the top angle, subtract it from the bend angle to get the lower part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the bottom angle.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q2h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q2h">2</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 60°, bend angle 160°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M183.3 25.5 L139.2 102.0 L125.1 181.6"/><path class="rd" d="M148.3 48.0 A22 22 0 0 0 159.3 67.1"/><text class="rlbl halo" x="130.3" y="63.5" text-anchor="middle" style="font-size:13px">60°</text><path class="rd" d="M149.2 84.7 A20 20 0 0 1 135.7 121.7"/><text class="rlbl halo" x="180.5" y="121.5" text-anchor="middle" style="font-size:13px">160°</text><path class="rd" d="M151.7 156.0 A22 22 0 0 0 133.5 134.3"/><text class="qm halo" x="163.7" y="149.5" text-anchor="middle">?</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">80°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 60° angle and the upper part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the upper part is 60°. The bend angle is 160°, so the lower part is 160° − 60° = 100°. The lower part and the bottom angle are co-interior angles, so the bottom angle is 180° − 100° = 80°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 55°, bend angle 140°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M116.2 26.7 L168.9 102.0 L161.9 181.9"/><path class="rd" d="M153.1 48.0 A22 22 0 0 1 143.7 66.0"/><text class="rlbl halo" x="171.1" y="63.5" text-anchor="middle" style="font-size:13px">55°</text><path class="rd" d="M157.4 85.6 A20 20 0 0 0 167.2 121.9"/><text class="rlbl halo" x="126.4" y="117.9" text-anchor="middle" style="font-size:13px">140°</text><path class="rd" d="M142.2 156.0 A22 22 0 0 1 166.1 134.1"/><text class="qm halo" x="130.2" y="149.5" text-anchor="middle">?</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t2" name="t2" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 2 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the upper part from the top angle, subtract it from the bend angle to get the lower part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the bottom angle.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q3h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q3h">3</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 55°, bend angle ?, bottom angle 70°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M183.8 26.7 L131.1 102.0 L159.6 180.4"/><path class="rd" d="M146.9 48.0 A22 22 0 0 0 156.3 66.0"/><text class="rlbl halo" x="128.9" y="63.5" text-anchor="middle" style="font-size:13px">55°</text><path class="rd" d="M142.6 85.6 A20 20 0 0 1 137.9 120.8"/><text class="qm halo" x="162.8" y="112.2" text-anchor="middle">?</text><path class="rd" d="M128.7 156.0 A22 22 0 0 1 143.2 135.3"/><text class="rlbl halo" x="110.7" y="149.5" text-anchor="middle" style="font-size:13px">70°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">125°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 55° angle and the upper part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the upper part is 55°. The 70° angle and the lower part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the lower part is 70°. The bend angle is the sum of the two parts: 55° + 70° = 125°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 130°, bend angle ?, bottom angle 65°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M110.6 28.1 L172.7 102.0 L136.5 179.6"/><path class="rd" d="M105.3 48.0 A22 22 0 0 0 141.5 64.9"/><text class="rlbl halo" x="83.3" y="63.5" text-anchor="middle" style="font-size:13px">130°</text><path class="rd" d="M159.8 86.7 A20 20 0 0 0 164.2 120.1"/><text class="qm halo" x="140.9" y="112.2" text-anchor="middle">?</text><path class="rd" d="M169.5 156.0 A22 22 0 0 0 156.8 136.1"/><text class="rlbl halo" x="187.5" y="149.5" text-anchor="middle" style="font-size:13px">65°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t3" name="t3" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 3 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. It splits the bend angle into two parts. Alternate angles are equal and co-interior angles add up to 180°, so find each part and add them: bend angle = upper part + lower part.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q4h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q4h">4</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 110°, bottom angle 35°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M167.4 22.9 L188.6 102.0 L90.1 170.9"/><path class="rd" d="M152.1 48.0 A22 22 0 0 0 179.8 69.3"/><text class="qm halo" x="140.1" y="66.5" text-anchor="middle">?</text><path class="rd" d="M183.4 82.7 A20 20 0 0 0 172.2 113.5"/><text class="rlbl halo" x="147.2" y="91.5" text-anchor="middle" style="font-size:13px">110°</text><path class="rd" d="M133.4 156.0 A22 22 0 0 0 129.5 143.4"/><text class="rlbl halo" x="153.4" y="149.5" text-anchor="middle" style="font-size:13px">35°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">105°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 35° angle and the lower part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the lower part is 35°. The bend angle is 110°, so the upper part is 110° − 35° = 75°. The upper part and the top angle are co-interior angles, so the top angle is 180° − 75° = 105°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 130°, bottom angle 120°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M163.0 23.6 L134.4 102.0 L178.6 178.5"/><path class="rd" d="M132.1 48.0 A22 22 0 0 0 146.5 68.7"/><text class="qm halo" x="120.1" y="66.5" text-anchor="middle">?</text><path class="rd" d="M141.3 83.2 A20 20 0 0 1 144.4 119.3"/><text class="rlbl halo" x="176.3" y="102.8" text-anchor="middle" style="font-size:13px">130°</text><path class="rd" d="M187.6 156.0 A22 22 0 0 0 154.6 136.9"/><text class="rlbl halo" x="209.6" y="149.5" text-anchor="middle" style="font-size:13px">120°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t4" name="t4" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 4 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the lower part from the bottom angle, subtract it from the bend angle to get the upper part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the top angle.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q5h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q5h">5</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 70°, bend angle ?, bottom angle 130°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M144.1 23.6 L172.7 102.0 L110.6 175.9"/><path class="rd" d="M175.0 48.0 A22 22 0 0 1 160.5 68.7"/><text class="rlbl halo" x="193.0" y="63.5" text-anchor="middle" style="font-size:13px">70°</text><path class="rd" d="M165.8 83.2 A20 20 0 0 0 159.8 117.3"/><text class="qm halo" x="141.1" y="102.4" text-anchor="middle">?</text><path class="rd" d="M105.3 156.0 A22 22 0 0 1 141.5 139.1"/><text class="rlbl halo" x="83.3" y="149.5" text-anchor="middle" style="font-size:13px">130°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">120°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 70° angle and the upper part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the upper part is 70°. The 130° angle and the lower part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the lower part is 180° − 130° = 50°. The bend angle is the sum of the two parts: 70° + 50° = 120°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 115°, bend angle ?, bottom angle 40°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M154.0 24.4 L117.8 102.0 L202.1 172.7"/><path class="rd" d="M165.0 48.0 A22 22 0 0 1 133.7 67.9"/><text class="rlbl halo" x="187.0" y="63.5" text-anchor="middle" style="font-size:13px">115°</text><path class="rd" d="M126.3 83.9 A20 20 0 0 1 133.1 114.9"/><text class="qm halo" x="150.0" y="100.9" text-anchor="middle">?</text><path class="rd" d="M160.2 156.0 A22 22 0 0 1 165.3 141.9"/><text class="rlbl halo" x="142.2" y="149.5" text-anchor="middle" style="font-size:13px">40°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t5" name="t5" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 5 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. It splits the bend angle into two parts. Alternate angles are equal and co-interior angles add up to 180°, so find each part and add them: bend angle = upper part + lower part.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q6h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q6h">6</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 100°, bottom angle 45°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M175.7 26.7 L123.0 102.0 L195.4 174.4"/><path class="rd" d="M138.8 48.0 A22 22 0 0 0 148.2 66.0"/><text class="qm halo" x="126.8" y="66.5" text-anchor="middle">?</text><path class="rd" d="M134.5 85.6 A20 20 0 0 1 137.1 116.1"/><text class="rlbl halo" x="164.8" y="102.8" text-anchor="middle" style="font-size:13px">100°</text><path class="rd" d="M155.0 156.0 A22 22 0 0 1 161.4 140.4"/><text class="rlbl halo" x="137.0" y="149.5" text-anchor="middle" style="font-size:13px">45°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">55°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 45° angle and the lower part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the lower part is 45°. The bend angle is 100°, so the upper part is 100° − 45° = 55°. The upper part and the top angle are alternate angles, so the top angle is 55°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 115°, bottom angle 125°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M124.7 25.5 L168.9 102.0 L116.2 177.3"/><path class="rd" d="M115.7 48.0 A22 22 0 0 0 148.7 67.1"/><text class="qm halo" x="103.7" y="66.5" text-anchor="middle">?</text><path class="rd" d="M158.9 84.7 A20 20 0 0 0 157.4 118.4"/><text class="rlbl halo" x="126.9" y="104.7" text-anchor="middle" style="font-size:13px">115°</text><path class="rd" d="M109.1 156.0 A22 22 0 0 1 143.7 138.0"/><text class="rlbl halo" x="87.1" y="149.5" text-anchor="middle" style="font-size:13px">125°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t6" name="t6" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 6 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the lower part from the bottom angle, subtract it from the bend angle to get the upper part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the top angle.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q7h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q7h">7</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 135°, bend angle 115°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M195.4 29.6 L123.0 102.0 L151.5 180.4"/><path class="rd" d="M199.0 48.0 A22 22 0 0 1 161.4 63.6"/><text class="rlbl halo" x="221.0" y="63.5" text-anchor="middle" style="font-size:13px">135°</text><path class="rd" d="M137.1 87.9 A20 20 0 0 1 129.8 120.8"/><text class="rlbl halo" x="165.0" y="115.8" text-anchor="middle" style="font-size:13px">115°</text><path class="rd" d="M164.7 156.0 A22 22 0 0 0 135.1 135.3"/><text class="qm halo" x="176.7" y="149.5" text-anchor="middle">?</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">110°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 135° angle and the upper part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the upper part is 180° − 135° = 45°. The bend angle is 115°, so the lower part is 115° − 45° = 70°. The lower part and the bottom angle are co-interior angles, so the bottom angle is 180° − 70° = 110°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the lower line m.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 65°, bend angle 140°, bottom angle ?."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M126.4 24.4 L162.6 102.0 L141.4 181.1"/><path class="rd" d="M159.4 48.0 A22 22 0 0 1 146.7 67.9"/><text class="rlbl halo" x="177.4" y="63.5" text-anchor="middle" style="font-size:13px">65°</text><path class="rd" d="M154.1 83.9 A20 20 0 0 0 157.4 121.3"/><text class="rlbl halo" x="120.8" y="110.2" text-anchor="middle" style="font-size:13px">140°</text><path class="rd" d="M170.1 156.0 A22 22 0 0 0 153.8 134.7"/><text class="qm halo" x="182.1" y="149.5" text-anchor="middle">?</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t7" name="t7" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 7 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the upper part from the top angle, subtract it from the bend angle to get the lower part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the bottom angle.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q8h">
+      
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q8h">8</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 125°, bend angle ?, bottom angle 55°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M183.8 26.7 L131.1 102.0 L183.8 177.3"/><path class="rd" d="M190.9 48.0 A22 22 0 0 1 156.3 66.0"/><text class="rlbl halo" x="212.9" y="63.5" text-anchor="middle" style="font-size:13px">125°</text><path class="rd" d="M142.6 85.6 A20 20 0 0 1 142.6 118.4"/><text class="qm halo" x="163.1" y="108.0" text-anchor="middle">?</text><path class="rd" d="M146.9 156.0 A22 22 0 0 1 156.3 138.0"/><text class="rlbl halo" x="128.9" y="149.5" text-anchor="middle" style="font-size:13px">55°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">110°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 125° angle and the upper part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the upper part is 180° − 125° = 55°. The 55° angle and the lower part of the bend angle are alternate angles (between the parallel lines, on opposite sides of the path), so the lower part is 55°. The bend angle is the sum of the two parts: 55° + 55° = 110°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 35°, bend angle ?, bottom angle 80°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M90.1 33.1 L188.6 102.0 L174.5 181.6"/><path class="rd" d="M133.4 48.0 A22 22 0 0 1 129.5 60.6"/><text class="rlbl halo" x="153.4" y="63.5" text-anchor="middle" style="font-size:13px">35°</text><path class="rd" d="M172.2 90.5 A20 20 0 0 0 185.1 121.7"/><text class="qm halo" x="157.1" y="121.0" text-anchor="middle">?</text><path class="rd" d="M201.0 156.0 A22 22 0 0 0 182.9 134.3"/><text class="rlbl halo" x="219.0" y="149.5" text-anchor="middle" style="font-size:13px">80°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t8" name="t8" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 8 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. It splits the bend angle into two parts. Alternate angles are equal and co-interior angles add up to 180°, so find each part and add them: bend angle = upper part + lower part.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q9h">
+      <div class="topic"><b>★ Challenge</b></div>
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q9h">9</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 140°, bend angle ?, bottom angle 145°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M104.3 31.3 L188.6 102.0 L90.1 170.9"/><path class="rd" d="M102.2 48.0 A22 22 0 0 0 141.1 62.1"/><text class="rlbl halo" x="80.2" y="63.5" text-anchor="middle" style="font-size:13px">140°</text><path class="rd" d="M173.2 89.1 A20 20 0 0 0 172.2 113.5"/><text class="qm halo" x="156.6" y="106.6" text-anchor="middle">?</text><path class="rd" d="M89.4 156.0 A22 22 0 0 1 129.5 143.4"/><text class="rlbl halo" x="67.4" y="149.5" text-anchor="middle" style="font-size:13px">145°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">75°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 140° angle and the upper part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the upper part is 180° − 140° = 40°. The 145° angle and the lower part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the lower part is 180° − 145° = 35°. The bend angle is the sum of the two parts: 40° + 35° = 75°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? at the bend.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle 128°, bend angle ?, bottom angle 110°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M187.1 27.5 L128.9 102.0 L157.5 180.4"/><path class="rd" d="M193.1 48.0 A22 22 0 0 1 157.6 65.3"/><text class="rlbl halo" x="215.1" y="63.5" text-anchor="middle" style="font-size:13px">128°</text><path class="rd" d="M141.2 86.2 A20 20 0 0 1 135.7 120.8"/><text class="qm halo" x="160.5" y="113.0" text-anchor="middle">?</text><path class="rd" d="M170.6 156.0 A22 22 0 0 0 141.0 135.3"/><text class="rlbl halo" x="192.6" y="149.5" text-anchor="middle" style="font-size:13px">110°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t9" name="t9" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 9 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. It splits the bend angle into two parts. Alternate angles are equal and co-interior angles add up to 180°, so find each part and add them: bend angle = upper part + lower part.</div>
+    </article>
+
+    <article class="card" aria-labelledby="q10h">
+      <div class="topic"><b>★ Challenge</b></div>
+      <div class="pair">
+        <div class="col sample"><div class="tag-row"><span class="badge" id="q10h">10</span><span class="tag">Sample Question</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 111°, bottom angle 117°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><line class="dash" x1="30" y1="102" x2="266" y2="102"/><path class="ln" d="M191.7 28.7 L125.7 102.0 L165.0 179.2"/><path class="rd" d="M196.3 48.0 A22 22 0 0 1 159.6 64.3"/><text class="qm halo" x="208.3" y="66.5" text-anchor="middle">?</text><path class="rd" d="M139.1 87.1 A20 20 0 0 1 134.8 119.8"/><text class="rlbl halo" x="168.3" y="112.1" text-anchor="middle" style="font-size:13px">111°</text><path class="rd" d="M175.2 156.0 A22 22 0 0 0 143.2 136.4"/><text class="rlbl halo" x="197.2" y="149.5" text-anchor="middle" style="font-size:13px">117°</text></svg>
+          <p class="q">Give the angle in degrees.</p>
+          <p class="answer"><b>Answer:</b> <span class="a">132°</span></p>
+          <p class="explain"><b>Explanation:</b> Through the bend draw a line parallel to l and m. The 117° angle and the lower part of the bend angle are co-interior angles (between the parallel lines, on the same side of the path), so the lower part is 180° − 117° = 63°. The bend angle is 111°, so the upper part is 111° − 63° = 48°. The upper part and the top angle are co-interior angles, so the top angle is 180° − 48° = 132°.</p></div>
+        <div class="col try"><div class="tag-row"><span class="tag">Now You Try</span></div>
+          <p class="q"><b>Q:</b> In the figure, l ∥ m. A path crosses l, bends between the two lines and then crosses m. Find the angle marked ? where the path meets the upper line l.</p>
+          <div class="note"><b>Tip:</b> Draw a line through the bend parallel to l and m. It splits the bend angle into an <b>upper part</b> and a <b>lower part</b>. Alternate angles are equal; co-interior angles add up to 180°.</div>
+          <svg class="diagram" style="max-width:330px" viewBox="0 0 300 204" role="img" aria-label="Parallel lines l and m crossed by a path that bends between them. Top angle ?, bend angle 98°, bottom angle 123°."><line class="ln" x1="30" y1="48" x2="266" y2="48"/><path class="ln" d="M251 42 L259 48 L251 54 M259 42 L267 48 L259 54"/><text class="lbl" x="12" y="54" text-anchor="middle">l</text><line class="ln" x1="30" y1="156" x2="266" y2="156"/><path class="ln" d="M251 150 L259 156 L251 162 M259 150 L267 156 L259 162"/><text class="lbl" x="12" y="162" text-anchor="middle">m</text><path class="ln" d="M99.3 30.9 L181.1 102.0 L131.8 177.8"/><path class="rd" d="M96.9 48.0 A22 22 0 0 0 135.5 62.4"/><text class="qm halo" x="84.9" y="66.5" text-anchor="middle">?</text><path class="rd" d="M166.0 88.9 A20 20 0 0 0 170.2 118.8"/><text class="rlbl halo" x="142.4" y="111.9" text-anchor="middle" style="font-size:13px">98°</text><path class="rd" d="M124.0 156.0 A22 22 0 0 1 158.0 137.5"/><text class="rlbl halo" x="102.0" y="149.5" text-anchor="middle" style="font-size:13px">123°</text></svg>
+          <div class="blank-row big-row"><input class="blank big" id="in-t10" name="t10" type="text" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your answer here" aria-label="Question 10 answer"><span class="unit">°</span></div></div>
+      </div>
+      <div class="remember"><b>Remember:</b> Draw a line through the bend parallel to the two given lines. Find the lower part from the bottom angle, subtract it from the bend angle to get the upper part, then use alternate angles (equal) or co-interior angles (sum 180°) to reach the top angle.</div>
+    </article>
+
+  </div>
+
+  <section class="submit-card" aria-label="Submit homework">
+    <button type="button" class="start-btn" id="submit-btn">Submit Homework</button>
+    <p class="submit-msg" id="submit-msg" role="status"></p>
+    <button type="button" class="start-btn" id="view-results" hidden>View score and answers</button>
+  </section>
+</main>
+
+<div class="overlay res-overlay" id="res-overlay" role="dialog" aria-modal="true" aria-label="Your results" hidden>
+  <div class="res-modal">
+    <button type="button" class="x-btn" id="res-close" aria-label="Close results">&times;</button>
+    <div class="sheet results" id="results"></div>
+  </div>
+</div>
+
+<div class="overlay" id="warn" role="alertdialog" aria-modal="true" aria-labelledby="warn-title" hidden>
+  <div class="modal">
+    <h2 id="warn-title">Answer every question</h2>
+    <p id="warn-text"></p>
+    <div class="actions"><button type="button" class="start-btn" id="warn-ok">OK</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
+  <div class="modal">
+    <h2 id="gate-title">Before you submit</h2>
+
+    <div class="pane" id="pane-ask">
+      <p><b>Kindly take photos of your homework before making the submission.</b></p>
+      <div class="actions">
+        <button type="button" class="start-btn alt" id="gate-no">I will go back and take photos of homework</button>
+        <button type="button" class="start-btn" id="gate-yes">I have taken the photos of the homework</button>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-cam" hidden>
+      <p class="cam-instr">Choose photos of the homework pages you wrote in your copy.</p>
+      <p class="cam-status" id="cam-status" role="status"></p>
+      <div class="actions">
+        <button type="button" class="start-btn" id="cam-gallery">Choose photos from gallery</button>
+        <input type="file" id="gallery-input" accept="image/*" multiple hidden>
+        <p class="side-note">Take photos using your camera first, then choose them from the gallery.</p>
+        <button type="button" class="start-btn alt" id="cam-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-check" hidden>
+      <div class="thumbs" id="thumbs"></div>
+      <p class="cam-status" id="check-status" role="status" aria-live="polite"></p>
+      <div class="spinner" id="check-spin" role="presentation" hidden></div>
+      <div class="actions" id="check-actions" hidden>
+        <button type="button" class="start-btn" id="send-photos">Send photos</button>
+        <button type="button" class="start-btn alt" id="add-photos">Add more photos</button>
+        <button type="button" class="start-btn alt" id="check-retake">Choose different photos</button>
+        <button type="button" class="start-btn alt" id="check-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-done" hidden>
+      <div class="sent-badge" aria-hidden="true">
+        <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M15 27 l8 8 l15 -17"/></svg>
+      </div>
+      <p class="verified">Sent! Great job 🎉</p>
+      <p class="done-msg">Your score and homework photos have reached your math teacher. Well done for finishing!</p>
+      <div class="actions"><button type="button" class="start-btn green" id="done-view">View score and answers</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="rank-overlay" role="dialog" aria-modal="true" aria-labelledby="rank-pop-title" hidden>
+  <div class="modal rank-modal">
+    <button type="button" class="x-btn" id="rank-pop-close" aria-label="Close rankings">&times;</button>
+    <h2 id="rank-pop-title">Class rankings</h2>
+    <div id="rank-pop-body"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
+  <form class="modal" id="details" novalidate>
+    <h2 id="dlg-title">Before you begin</h2>
+    <p>Enter your details to start the homework.</p>
+    <div class="field">
+      <label for="s-name">Name</label>
+      <input id="s-name" name="name" type="text" autocomplete="name" placeholder="Full name" required>
+    </div>
+    <div class="field">
+      <label for="s-class">Class</label>
+      <input id="s-class" name="class" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" placeholder="e.g. 7">
+    </div>
+    <div class="field">
+      <label for="s-phone">Phone Number</label>
+      <div class="phone-wrap">
+        <span class="cc" aria-hidden="true">+91</span>
+        <input id="s-phone" name="phone" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number" aria-label="Phone number, 10 digits after +91">
+      </div>
+    </div>
+    <p class="err" id="err" role="alert"></p>
+    <div class="actions">
+      <button type="submit" class="start-btn">Start Homework</button>
+    </div>
+    <div class="rank-entry">
+      <p class="re-title">Class-wise rankings</p>
+      <div class="rank-btns">
+        <button type="button" class="rank-open" data-class="7">Class 7<br>rankings</button>
+        <button type="button" class="rank-open" data-class="8">Class 8<br>rankings</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<style>
+/* Submit gate: "take photos" notice + gallery picker */
+#gate { z-index: 55; }
+#gate .pane[hidden] { display: none; }
+#gate .pane { display: flex; flex-direction: column; gap: 14px; }
+#gate .actions .alt { background: var(--sample); color: var(--ink); border: 2px solid var(--line); }
+#pane-ask p { color: var(--ink); font-size: 1.1rem; }
+.cam-instr { background: var(--note); border: 2px solid var(--note-rule); border-radius: 12px; padding: 10px 12px; color: var(--ink) !important; font-weight: 600; }
+.cam-frame { position: relative; border: 3px solid var(--line); border-radius: 14px; overflow: hidden; background: #000; aspect-ratio: 3 / 4; max-height: 52vh; width: 100%; display: grid; place-items: center; }
+.cam-frame video, .cam-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cam-status { min-height: 1.4em; font-weight: 600; color: var(--ink) !important; }
+.cam-status.bad { color: var(--red) !important; }
+.cam-help { background: var(--sample); border: 2px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: .95rem; color: var(--ink); }
+.cam-help ol { margin: 6px 0 0; padding-left: 20px; }
+.cam-help b { font-weight: 700; }
+.side-note { margin: 0; text-align: center; font-size: 1.05rem; font-weight: 700; line-height: 1.35; color: var(--red) !important; background: color-mix(in srgb, var(--red) 10%, var(--paper)); border: 2px solid var(--red); border-radius: 10px; padding: 8px 12px; }
+.spinner { width: 34px; height: 34px; margin: 2px auto; border: 4px solid var(--sample-tag); border-top-color: var(--ell-line); border-radius: 50%; animation: gspin .8s linear infinite; }
+.spinner[hidden] { display: none; }
+@keyframes gspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 3s; } }
+.done-msg { text-align: center; font-weight: 600; color: var(--ink) !important; font-size: 1.05rem; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+.thumbs img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 2px solid var(--line); border-radius: 10px; }
+.bar-track { height: 10px; border-radius: 6px; background: var(--sample); border: 2px solid var(--line); overflow: hidden; }
+.bar-fill { height: 100%; width: 0; background: var(--ell-line); transition: width .25s; }
+#gate .start-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+#gate #send-photos.sent { opacity: 1; color: #6fe0a0; }
+:root[data-theme="dark"] #gate #send-photos.sent { color: #1c7a3f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #gate #send-photos.sent { color: #1c7a3f; } }
+.verified { text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; color: #1c7a3f; }
+:root[data-theme="dark"] .verified { color: #6fe0a0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .verified { color: #6fe0a0; } }
+/* Friendly green "Sent!" screen */
+#pane-done { align-items: center; text-align: center; }
+.sent-badge { width: 84px; height: 84px; margin: 4px auto 0; animation: pop 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) backwards; }
+.sent-badge svg { width: 100%; height: 100%; display: block; }
+.sent-badge circle { fill: #1f9d57; }
+.sent-badge path { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; animation: tick 0.5s ease-out 0.35s backwards; }
+@keyframes tick { from { stroke-dashoffset: 40; } }
+#pane-done .verified { font-size: 1.7rem; margin: 0; color: #178a4a; }
+:root[data-theme="dark"] #pane-done .verified { color: #6fe0a0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #pane-done .verified { color: #6fe0a0; } }
+#pane-done .done-msg { margin: 0; }
+#gate .start-btn.green { background: #1f9d57; color: #fff; }
+#gate .start-btn.green:hover { background: #178a4a; }
+@media (prefers-reduced-motion: reduce) { .sent-badge, .sent-badge path { animation: none; } }
+</style>
+<script>
+(function () {
+  var overlay = document.getElementById('overlay');
+  var form = document.getElementById('details');
+  var main = document.querySelector('main');
+  var nameEl = document.getElementById('s-name');
+  var classEl = document.getElementById('s-class');
+  var phoneEl = document.getElementById('s-phone');
+  var err = document.getElementById('err');
+  var who = document.getElementById('who');
+  var whoText = document.getElementById('who-text');
+  var keys = { name: nameEl, cls: classEl, phone: phoneEl };
+
+  Object.keys(keys).forEach(function (k) {
+    try { var v = localStorage.getItem('hw-' + k); if (v) keys[k].value = v; } catch (e) {}
+  });
+
+  phoneEl.value = phoneEl.value.replace(/\D/g, '').slice(-10);
+  phoneEl.addEventListener('input', function () { phoneEl.value = phoneEl.value.replace(/\D/g, '').slice(0, 10); });
+  classEl.value = classEl.value.replace(/\D/g, '');
+  classEl.addEventListener('input', function () { classEl.value = classEl.value.replace(/\D/g, ''); });
+
+  function openDialog() {
+    overlay.hidden = false;
+    main.setAttribute('inert', '');
+    err.textContent = '';
+    (nameEl.value ? phoneEl.value ? nameEl : classEl : nameEl).focus();
+  }
+  function closeDialog() {
+    overlay.hidden = true;
+    main.removeAttribute('inert');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var n = nameEl.value.trim(), c = classEl.value.trim(), p = phoneEl.value.replace(/[\s+]/g, '');
+    if (!n) { err.textContent = 'Please enter your name.'; nameEl.focus(); return; }
+    if (!/^\d{1,2}$/.test(c)) { err.textContent = 'Please enter your class as a number, for example 7.'; classEl.focus(); return; }
+    if (!/^\d{10}$/.test(p)) { err.textContent = 'Please enter a 10-digit phone number.'; phoneEl.focus(); return; }
+    try {
+      localStorage.setItem('hw-name', n);
+      localStorage.setItem('hw-cls', c);
+      localStorage.setItem('hw-phone', phoneEl.value.trim());
+    } catch (e2) {}
+    whoText.textContent = n + ' · Class ' + c + ' · +91 ' + phoneEl.value.trim();
+    who.hidden = false;
+    closeDialog();
+  });
+
+  document.getElementById('who-edit').addEventListener('click', openDialog);
+  openDialog();
+})();
+</script>
+
+<script>
+/* ---------- result push to Google Sheet (Apps Script) ---------- */
+(function () {
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypo-5ThjzEFYh1t-dlCp94v01kU1wpxnu1WCNKLDgxfA3KXuN8Nh7c_XdiBqhTAfyxGA/exec";
+  var QUIZ_NAME = "Geometry Homework 18 Nov 2026";
+  // Answer key. mc = option index (0 = first option); num = number; txt = accepted words
+  var KEY = {"t1": {"t": "num", "a": 65, "show": "65\u00b0"}, "t2": {"t": "num", "a": 95, "show": "95\u00b0"}, "t3": {"t": "num", "a": 115, "show": "115\u00b0"}, "t4": {"t": "num", "a": 70, "show": "70\u00b0"}, "t5": {"t": "num", "a": 105, "show": "105\u00b0"}, "t6": {"t": "num", "a": 120, "show": "120\u00b0"}, "t7": {"t": "num", "a": 75, "show": "75\u00b0"}, "t8": {"t": "num", "a": 115, "show": "115\u00b0"}, "t9": {"t": "num", "a": 122, "show": "122\u00b0"}, "t10": {"t": "num", "a": 139, "show": "139\u00b0"}};
+  // Topic of each question, in order Q1 to Q10 (shown on each card and sent to the sheet)
+  var TOPICS = ["Bend between parallels: bottom angle", "Bend between parallels: bottom angle (wide bend)", "Bend between parallels: middle angle", "Bend between parallels: top angle", "Bend angle from top and bottom angles", "Bend between parallels: top angle (given bottom and bend)", "Bend between parallels: bottom angle (given top and bend)", "Bend between parallels: middle angle (mixed sides)", "Bend between parallels: middle angle (Challenge)", "Bend between parallels: top angle (Challenge)"];
+  var btn = document.getElementById('submit-btn');
+  var msg = document.getElementById('submit-msg');
+  var resultSent = false;
+  var finalElapsed = null; // ms from the start of the homework to the moment of submit
+
+  // Why each answer is right, and the rule to remember (shown on the results page)
+  var QINFO = [
+  {
+    "why": "The arms TR and TS meet at T, so T is the vertex and goes in the middle: ∠RTS (or ∠STR).",
+    "remember": "An angle is formed by two rays with a common end point called the vertex. In a three-letter name the vertex letter always goes in the middle, so ∠ABC and ∠CBA are the same angle with vertex B."
+  },
+  {
+    "why": "Angles that add up to 90° are complementary (for example 35° and 55°). Supplementary angles add up to 180°.",
+    "remember": "Complementary angles add up to 90°. Supplementary angles add up to 180°. A linear pair is always supplementary."
+  },
+  {
+    "why": "∠XYW and ∠ZYW form a linear pair, so ∠XYW = 180° − 107° = 73°.",
+    "remember": "Two adjacent angles on a straight line form a linear pair and add up to 180°, so each is 180° minus the other."
+  },
+  {
+    "why": "A statement that must be proved from axioms, definitions and earlier results is a theorem, for example \"vertically opposite angles are equal\".",
+    "remember": "An axiom is a statement accepted as true without proof. A theorem is a statement that is proved using axioms, definitions and earlier theorems."
+  },
+  {
+    "why": "The transversal crosses three lines, so there are 3 points of intersection. Each forms 4 angles, so 3 × 4 = 12.",
+    "remember": "A transversal is a line that cuts two or more lines at different points. Every point where it crosses a line forms 4 angles, so a transversal cutting k lines forms 4k angles: 8 for two lines and 12 for three."
+  },
+  {
+    "why": "Co-interior angles between parallel lines add up to 180°. They are equal only when each is 90°, so the statement is False.",
+    "remember": "When a transversal cuts two parallel lines: corresponding angles are equal, alternate interior angles are equal, and co-interior angles (same side, between the lines) add up to 180°."
+  },
+  {
+    "why": "Adjacent angles form a linear pair and add up to 180°. They are equal only when each is 90°, so the statement is False.",
+    "remember": "When two lines intersect, vertically opposite angles are equal. Adjacent angles form a linear pair and add up to 180°, so they are equal only when each is 90°."
+  },
+  {
+    "why": "7x − 9 = 5x + 11, so x = 10 and ∠POR = 61°. ∠POS forms a linear pair with ∠POR, so ∠POS = 180° − 61° = 119°.",
+    "remember": "Vertically opposite angles are equal, so write an equation and solve for x. Then use a linear pair (adjacent angles on a straight line add up to 180°) to find the other angle."
+  },
+  {
+    "why": "Through E draw a line parallel to PQ and RS. Co-interior angles give 180° − 125° = 55°, so the lower part of ∠QEF is 115° − 55° = 60°. Alternate angles give 60° at F, plus ∠RSF = 45°. So ∠EFS = 105°.",
+    "remember": "For a path that bends between two parallel lines, draw a line through each bend point parallel to the lines. Use co-interior angles (sum 180°) and alternate angles (equal). Here ∠EFS = ∠PQE + ∠QEF + ∠RSF − 180°."
+  },
+  {
+    "why": "6x − 7 = 4x + 19, so x = 13 and ∠1 = 71°. ∠4 is the angle that forms a linear pair with the 71° angle, so ∠4 = 180° − 71° = 109°.",
+    "remember": "When parallel lines are cut by a transversal, the angle in the same position at every line is equal (corresponding angles). Use a linear pair (sum 180°) or vertically opposite angles (equal) to link positions, form an equation and solve for x."
+  }
+];
+
+  var home = document.getElementById('homework');
+  var resEl = document.getElementById('results');
+  var viewBtn = document.getElementById('view-results');
+  var startT = Date.now(), timerSet = false;
+  document.getElementById('details').addEventListener('submit', function () {
+    setTimeout(function () {
+      if (!timerSet && document.getElementById('overlay').hidden) { startT = Date.now(); timerSet = true; }
+    }, 0);
+  });
+
+  var resOverlay = document.getElementById('res-overlay');
+  var warnEl = document.getElementById('warn');
+  function showView(showResults) {
+    resOverlay.hidden = !showResults;
+    if (showResults) { home.setAttribute('inert', ''); resOverlay.scrollTop = 0; document.getElementById('res-close').focus(); }
+    else home.removeAttribute('inert');
+  }
+  var missedTarget = null;
+  function showWarn(text, target) {
+    missedTarget = target || null;
+    document.getElementById('warn-text').textContent = text;
+    warnEl.hidden = false;
+    home.setAttribute('inert', '');
+    document.getElementById('warn-ok').focus();
+  }
+  document.getElementById('warn-ok').addEventListener('click', function () {
+    warnEl.hidden = true;
+    home.removeAttribute('inert');
+    var t = missedTarget; missedTarget = null;
+    if (t) {
+      // wait a frame so the page is interactive again, then scroll up to the first missed question
+      requestAnimationFrame(function () {
+        t.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+        t.classList.remove('missed'); void t.offsetWidth; t.classList.add('missed');
+        setTimeout(function () { t.classList.remove('missed'); }, 2000);
+      });
+    }
+  });
+  document.getElementById('res-close').addEventListener('click', function () { showView(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!rankOv.hidden) closeRankPop();
+    else if (!warnEl.hidden) document.getElementById('warn-ok').click();
+    else if (!resOverlay.hidden) showView(false);
+  });
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+  }
+  function optText(name, i) {
+    var radios = document.querySelectorAll('input[name="' + name + '"]');
+    return radios[i] ? radios[i].parentNode.textContent.trim() : '';
+  }
+
+  // ---- answer checking for the three question types: multiple choice, number, word ----
+  function textInput(k) { return document.querySelector('input[type="text"][name="' + k + '"]'); }
+  function answered(k) {
+    if (KEY[k].t === 'mc') return chosen(k) >= 0;
+    var el = textInput(k);
+    return !!(el && el.value.trim());
+  }
+  function isRight(k) {
+    var s = KEY[k];
+    if (s.t === 'mc') return chosen(k) === s.a;
+    var el = textInput(k), v = el ? el.value : '';
+    if (s.t === 'num') {
+      v = v.replace(/degrees?|deg|°/gi, '').replace(/\s+/g, '').replace(',', '.');
+      return /^-?\d+(\.\d+)?$/.test(v) && Math.abs(parseFloat(v) - s.a) < 1e-9;
+    }
+    v = v.toLowerCase().replace(/[^a-z\s]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^(a|an|the) /, '');
+    return s.a.indexOf(v) >= 0;
+  }
+  function mineText(k) {
+    if (KEY[k].t === 'mc') { var c = chosen(k); return c < 0 ? 'No answer' : optText(k, c); }
+    var el = textInput(k); return el && el.value.trim() ? el.value.trim() : 'No answer';
+  }
+  function rightText(k) { return KEY[k].t === 'mc' ? optText(k, KEY[k].a) : KEY[k].show; }
+  function fmtPlain(sec) { return Math.floor(sec / 60) + ':' + ('0' + (sec % 60)).slice(-2); }
+  function fmtTime(ms) {
+    var s = Math.max(0, Math.round(ms / 1000)), m = Math.floor(s / 60);
+    return m + '<small> min </small>' + (s % 60) + '<small> s</small>';
+  }
+
+  function starPts(cx, cy, ro, ri) {
+    var pts = [];
+    for (var k = 0; k < 10; k++) {
+      var a = (-90 + k * 36) * Math.PI / 180, r = k % 2 ? ri : ro;
+      pts.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1));
+    }
+    return pts.join(' ');
+  }
+  function reduced() { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  function countUp(root) {
+    var els = root.querySelectorAll('.cnt');
+    if (reduced()) return;
+    els.forEach(function (el) {
+      var to = +el.getAttribute('data-to'), t0 = null;
+      el.textContent = '0';
+      function tick(t) {
+        if (t0 === null) t0 = t;
+        var u = Math.min(1, (t - t0) / 900);
+        el.textContent = String(Math.round(to * (1 - Math.pow(1 - u, 3))));
+        if (u < 1) requestAnimationFrame(tick); else el.textContent = String(to);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  function confetti() {
+    if (reduced()) return;
+    var box = document.createElement('div');
+    box.className = 'confetti'; box.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < 44; i++) {
+      var p = document.createElement('i');
+      p.style.left = (Math.random() * 100) + '%';
+      p.style.background = 'var(--t' + (1 + i % 5) + ')';
+      p.style.animationDelay = (Math.random() * 0.7) + 's';
+      p.style.animationDuration = (2.2 + Math.random() * 1.6) + 's';
+      p.style.setProperty('--x', (Math.random() * 160 - 80) + 'px');
+      p.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+      box.appendChild(p);
+    }
+    document.body.appendChild(box);
+    setTimeout(function () { box.remove(); }, 4800);
+  }
+
+  // Loads JSON from the Apps Script via a <script> tag (works from any page, no CORS problems)
+  function jsonp(url, ok, bad) {
+    var cb = 'rk_' + Date.now() + '_' + Math.floor(Math.random() * 1e6), done = false, sc = document.createElement('script');
+    function clean() { done = true; try { delete window[cb]; } catch (e) { window[cb] = undefined; } if (sc.parentNode) sc.parentNode.removeChild(sc); }
+    window[cb] = function (d) { if (done) return; clean(); ok(d); };
+    sc.onerror = function () { if (done) return; clean(); bad(); };
+    setTimeout(function () { if (!done) { clean(); bad(); } }, 15000);
+    sc.src = url + '&callback=' + cb + '&_=' + Date.now();
+    document.head.appendChild(sc);
+  }
+
+  var RANK_LOADING = '<div class="rank-loading" role="status" aria-live="polite"><div class="bar"></div><p class="rank-msg">Loading rankings…</p></div>';
+  function rankFirst(nm) { var f = String(nm || '').trim().split(/\s+/)[0] || ''; return f.charAt(0).toUpperCase() + f.slice(1).toLowerCase(); }
+  function rankListHTML(L) {
+    if (!L.length) return '';
+    return '<ol class="rank-list">' + L.map(function (x) {
+      var w = x.total ? Math.round(x.score / x.total * 100) : 0;
+      return '<li class="rank-row' + (x.rank <= 3 ? ' r' + x.rank : '') + (x.me ? ' me' : '') + '"><span class="fill" style="--w:' + w + '%"></span>' +
+             '<span class="rk">' + x.rank + '</span><span class="rn">' + esc(rankFirst(x.name)) + '</span>' +
+             '<span class="rs">' + x.score + '<small> / ' + x.total + (x.time != null && x.time !== '' ? ' · ' + fmtPlain(Math.round(x.time)) : '') + '</small></span></li>';
+    }).join('') + '</ol>';
+  }
+
+  // ---- Class ranking, read from the Google Sheet (first attempt per student only) ----
+  function loadRanking(clsNum, phone, score, total, attempt) {
+    var box = document.getElementById('rank-body');
+    if (!box) return;
+    if (isNaN(clsNum)) { box.innerHTML = '<p class="rank-msg">Enter your class number to see rankings.</p>'; return; }
+    var url = APPS_SCRIPT_URL + '?action=ranking&quiz=' + encodeURIComponent(QUIZ_NAME) +
+              '&class=' + clsNum + '&phone=' + encodeURIComponent(phone) +
+              '&name=' + encodeURIComponent(document.getElementById('s-name').value.trim());
+    jsonp(url, function (d) {
+      if (!d || d.error || !d.list) { fail('The sheet script replied with: ' + (d && d.error ? d.error : 'unexpected data') + '. Redeploy it as a New version.'); return; }
+      var me = null;
+      d.list.forEach(function (x) { if (x.me) me = x; });
+      // Our own row can take a few seconds to reach the sheet: keep the list hidden and look again
+      // until the student's own entry is found (or we give up after about 20 seconds)
+      if (!me && phone && attempt < 8) { setTimeout(function () { loadRanking(clsNum, phone, score, total, attempt + 1); }, 2500); return; }
+      if (!d.list.length) { box.innerHTML = '<p class="rank-msg">No Class ' + clsNum + ' results yet.</p>'; return; }
+      var L = d.list, n = L.length;
+      var html = me
+        ? '<div class="rank-hero"><span>Your rank</span><b>#' + me.rank + '</b><span>of ' + n + ' in Class ' + clsNum + '</span></div>'
+        : '<p class="rank-sub">' + n + (n === 1 ? ' student has' : ' students have') + ' attempted</p>';
+      html += rankListHTML(L);
+      if (me && (me.score !== score || me.total !== total)) {
+        html += '<p class="rank-note">Rankings use each student\'s first attempt. Your first attempt was ' + me.score + ' / ' + me.total + '.</p>';
+      } else if (!me && phone) {
+        html += '<p class="rank-note">Your result has not reached the sheet yet, so your own rank is not shown.</p>';
+      } else {
+        html += '<p class="rank-note">Rankings use each student\'s first attempt only. Ties on marks are ranked by the faster time.</p>';
+      }
+      box.innerHTML = html;
+    }, function () {
+      fail('Could not reach the sheet script. Check that it is deployed as a New version with access set to Anyone.');
+    });
+
+    function fail(why) {
+      if (attempt < 3) { setTimeout(function () { loadRanking(clsNum, phone, score, total, attempt + 1); }, 3000); return; }
+      box.innerHTML = '<p class="rank-msg">Could not load rankings. ' + esc(why) + '</p>';
+    }
+  }
+
+  // ---- Class-wise rankings popup (opened from the first screen) ----
+  var rankOv = document.getElementById('rank-overlay'), popToken = 0, popFocus = null;
+  function closeRankPop() { popToken++; rankOv.hidden = true; if (popFocus && popFocus.focus) popFocus.focus(); }
+  function openRankPop(clsNum, opener) {
+    var body = document.getElementById('rank-pop-body'), token = ++popToken;
+    popFocus = opener || null;
+    document.getElementById('rank-pop-title').textContent = 'Class ' + clsNum + ' rankings';
+    body.innerHTML = RANK_LOADING;
+    rankOv.hidden = false; rankOv.scrollTop = 0;
+    document.getElementById('rank-pop-close').focus();
+    (function load(attempt) {
+      function fail(why) {
+        if (token !== popToken) return;
+        if (attempt < 3) { setTimeout(function () { if (token === popToken) load(attempt + 1); }, 2500); return; }
+        body.innerHTML = '<p class="rank-msg">Could not load rankings. ' + esc(why) + '</p>';
+      }
+      jsonp(APPS_SCRIPT_URL + '?action=ranking&quiz=' + encodeURIComponent(QUIZ_NAME) + '&class=' + clsNum, function (d) {
+        if (token !== popToken) return;
+        if (!d || d.error || !d.list) { fail('The sheet script replied with: ' + (d && d.error ? d.error : 'unexpected data') + '.'); return; }
+        if (!d.list.length) { body.innerHTML = '<p class="rank-msg">No Class ' + clsNum + ' results yet.</p>'; return; }
+        var n = d.list.length;
+        body.innerHTML = '<p class="rank-sub">' + n + (n === 1 ? ' student has' : ' students have') + ' attempted · highest marks first</p>' +
+          rankListHTML(d.list) + '<p class="rank-note">Rankings use each student\'s first attempt only. Ties on marks are ranked by the faster time.</p>';
+      }, function () { fail('Could not reach the sheet script.'); });
+    })(1);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.rank-open'), function (b) {
+    b.addEventListener('click', function () { openRankPop(parseInt(b.getAttribute('data-class'), 10), b); });
+  });
+  document.getElementById('rank-pop-close').addEventListener('click', closeRankPop);
+  rankOv.addEventListener('click', function (e) { if (e.target === rankOv) closeRankPop(); });
+
+  function renderResults(name, cls, score, total) {
+    var keys = Object.keys(KEY);
+    var pct = Math.round(score / total * 100);
+    var C = 2 * Math.PI * 52, dash = (pct / 100 * C).toFixed(1);
+    var elapsed = finalElapsed != null ? finalElapsed : Date.now() - startT;
+    var verdict = pct === 100 ? 'Perfect score' : pct >= 80 ? 'Strong work' : pct >= 60 ? 'Good start' : 'Keep practising';
+    var hello = pct >= 80 ? 'Well done' : pct >= 60 ? 'Nice effort' : 'Good try';
+    var rows = keys.map(function (k, i) {
+      return { n: i + 1, topic: TOPICS[i], good: isRight(k), mine: mineText(k), right: rightText(k), info: QINFO[i] };
+    });
+    var bad = rows.filter(function (r) { return !r.good; });
+    var good = rows.length - bad.length;
+    var best = 0, cur = 0;
+    rows.forEach(function (r) { if (r.good) { cur++; best = Math.max(best, cur); } else cur = 0; });
+    var avg = Math.round(elapsed / 1000 / total);
+
+    var proto = '<svg class="proto" viewBox="0 0 220 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2">' +
+      '<path d="M10 110 A100 100 0 0 1 210 110 Z"/><path d="M40 110 A70 70 0 0 1 180 110"/>' +
+      (function () { var t = ''; for (var d = 0; d <= 180; d += 10) { var a = d * Math.PI / 180, x1 = 110 - 100 * Math.cos(a), y1 = 110 - 100 * Math.sin(a), l = d % 30 ? 8 : 14, x2 = 110 - (100 - l) * Math.cos(a), y2 = 110 - (100 - l) * Math.sin(a); t += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"/>'; } return t; })() +
+      '</g></svg>';
+
+    var stars = '<svg class="stars" viewBox="0 0 ' + (total * 24) + ' 24" role="img" aria-label="' + score + ' of ' + total + ' stars">';
+    for (var i = 0; i < total; i++) stars += '<polygon class="star' + (i < score ? ' on' : '') + '" style="--i:' + i + '" points="' + starPts(12 + i * 24, 12.5, 10.5, 4.4) + '"/>';
+    stars += '</svg>';
+
+    var S = {};
+    S.head = '<header class="res-head">' + proto + '<div class="res-eyebrow">Geometry Homework · 18 November 2026</div><h1>' + hello + ', ' + esc(name.split(' ')[0]) + '!</h1>' +
+         '<div class="res-who">' + esc(name) + ' · Class ' + esc(cls) + '</div>' + stars + '</header>';
+
+    S.ring = '<section class="top-analytics"><h2 class="an-title an-top">Your analytics</h2><div class="ring-card">' +
+         '<svg class="ring' + (pct < 60 ? ' low' : '') + '" viewBox="0 0 120 120" role="img" aria-label="Score ' + score + ' out of ' + total + ', ' + pct + ' percent">' +
+         '<circle class="ring-bg" cx="60" cy="60" r="52"/>' +
+         '<circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="' + dash + ' ' + C.toFixed(1) + '" transform="rotate(-90 60 60)"/>' +
+         '<text class="ring-num" x="60" y="62" text-anchor="middle">' + score + '/' + total + '</text>' +
+         '<text class="ring-pct" x="60" y="82" text-anchor="middle">' + pct + '%</text></svg>' +
+         '<div class="verdict">' + verdict + '</div></div></section>';
+
+    S.overview = '<section class="overview overview-stats">' +
+         '<div class="stats">' +
+         '<div class="stat" style="--sc:var(--t3)"><span class="k">Correct answers</span><span class="v"><span class="cnt" data-to="' + score + '">' + score + '</span><small> of ' + total + '</small></span></div>' +
+         '<div class="stat" style="--sc:var(--t1)"><span class="k">Time taken</span><span class="v">' + fmtTime(elapsed) + '</span></div>' +
+         '<div class="stat" style="--sc:var(--t5)"><span class="k">Best streak</span><span class="v"><span class="cnt" data-to="' + best + '">' + best + '</span><small> in a row</small></span></div>' +
+         '<div class="stat" style="--sc:var(--t4)"><span class="k">Pace</span><span class="v"><span class="cnt" data-to="' + avg + '">' + avg + '</span><small> s per question</small></span></div>' +
+         '</div></section>';
+
+    S.trail = '<section class="panel"><h2>Your answer trail</h2><div class="trail">' +
+         rows.map(function (r, i) {
+           return '<div class="step ' + (r.good ? 'good' : 'bad') + '" style="--i:' + i + '"><span class="dot" aria-hidden="true">' + (r.good ? '✓' : '✕') + '</span>' +
+                  '<span class="lab">Q' + r.n + '</span><span class="sr" style="position:absolute;left:-9999px">' + (r.good ? 'Correct' : 'Incorrect') + '</span></div>';
+         }).join('') + '</div></section>';
+
+    S.topic = '<section class="panel"><h2>Topic map</h2><div class="tmap">' +
+         rows.map(function (r) {
+           return '<div class="tile ' + (r.good ? 'good' : 'bad') + '" style="--th:var(--t' + (((r.n - 1) % 5) + 1) + ')"><span class="tq">Q' + r.n + '</span><span class="tn">' + esc(r.topic) +
+                  '</span><span class="ts">' + (r.good ? 'Mastered' : 'Revise') + '</span></div>';
+         }).join('') + '</div></section>';
+
+    S.next = '<div class="next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>' +
+         (bad.length ? 'Next step: revise ' + bad.map(function (r) { return esc(r.topic); }).join(', ') + ', then use the answer review above.' : 'Every topic mastered. Try the Challenge questions again without looking at the samples.') + '</span></div>';
+
+    S.revise = '<section class="panel"><h2>What to revise</h2>' +
+         (bad.length ? bad.map(function (r) {
+           return '<div class="rev"><h3>Q' + r.n + ' · ' + esc(r.topic) + '</h3><p><b>Remember:</b> ' + esc(r.info.remember) + '</p></div>';
+         }).join('') : '<div class="allgood">Nothing to revise. Every topic was answered correctly.</div>') + '</section>';
+
+    S.review = '<section class="panel"><h2>Answer review</h2>' +
+         rows.map(function (r) {
+           return '<details class="qrev ' + (r.good ? 'good' : 'bad') + '"' + (r.good ? '' : ' open') + '><summary class="qh"><span class="qn">Q' + r.n + '</span><span class="qt">' + esc(r.topic) + '</span>' +
+                  '<span class="pill-res ' + (r.good ? 'good' : 'bad') + '">' + (r.good ? 'Correct' : 'Incorrect') + '</span></summary>' +
+                  '<div class="qb"><div><b>Your answer:</b> ' + esc(r.mine) + '</div>' +
+                  (r.good ? '' : '<div><b>Correct answer:</b> ' + esc(r.right) + '</div>') +
+                  '<div class="why">' + esc(r.info.why) + '</div></div></details>';
+         }).join('') + '</section>';
+
+    var clsNum = parseInt(String(cls).replace(/\D/g, ''), 10);
+    S.rank = '<section class="panel" id="rank-panel"><h2>' + (isNaN(clsNum) ? 'Class rankings' : 'Class ' + clsNum + ' rankings') + '</h2>' +
+         '<div id="rank-body"><div class="rank-loading" role="status" aria-live="polite"><div class="bar"></div><p class="rank-msg">Loading rankings…</p></div></div></section>';
+
+    var h = S.head + S.ring + S.rank + S.review + '<h2 class="an-title">More analytics</h2>' + S.overview + S.trail + S.topic + S.revise + S.next;
+    h += '<div class="back-row"><button type="button" class="start-btn" id="back-hw">Close and review homework</button></div>';
+    resEl.innerHTML = h;
+    loadRanking(clsNum, document.getElementById('s-phone').value.trim(), score, total, 1);
+    countUp(resEl);
+    if (pct >= 80) confetti();
+  }
+
+  resEl.addEventListener('click', function (e) {
+    if (e.target && e.target.id === 'back-hw') showView(false);
+  });
+  viewBtn.addEventListener('click', function () { showView(true); });
+
+  function setMsg(text, cls) { msg.textContent = text; msg.className = 'submit-msg ' + (cls || ''); }
+
+  function chosen(name) {
+    var radios = document.querySelectorAll('input[name="' + name + '"]');
+    for (var i = 0; i < radios.length; i++) if (radios[i].checked) return i;
+    return -1;
+  }
+
+  function ensureFrame() {
+    var fr = document.getElementById('submissionFrame');
+    if (!fr) {
+      fr = document.createElement('iframe');
+      fr.name = fr.id = 'submissionFrame';
+      fr.style.display = 'none';
+      fr.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(fr);
+    }
+    return fr;
+  }
+  ensureFrame(); // create early so its blank first load is over before we submit
+
+  // Posts the data; calls onDone when the Google Script has answered (or after 60 s at most)
+  function submitResult(data, onDone) {
+    var fr = ensureFrame(), finished = false, t0 = Date.now(), tm;
+    function done() {
+      if (finished) return;
+      finished = true; fr.onload = null; clearTimeout(tm);
+      if (onDone) onDone();
+    }
+    tm = setTimeout(done, 60000);
+    fr.onload = function () { setTimeout(done, Math.max(0, 600 - (Date.now() - t0))); };
+    var f = document.createElement('form');
+    f.method = 'POST'; f.action = APPS_SCRIPT_URL; f.target = 'submissionFrame'; f.style.display = 'none';
+    Object.keys(data).forEach(function (k) {
+      var i = document.createElement('input');
+      i.type = 'hidden'; i.name = k; i.value = data[k];
+      f.appendChild(i);
+    });
+    document.body.appendChild(f);
+    f.submit();
+    f.remove();
+  }
+
+  /* ================= Submit gate: "take photos" notice + gallery picker ================= */
+  var gate = document.getElementById('gate');
+  var panes = ['ask', 'cam', 'check', 'done'];
+  var camStatus = document.getElementById('cam-status');
+  var verifiedOnce = false, photosB64 = [];
+
+  function showPane(n) {
+    panes.forEach(function (p) { document.getElementById('pane-' + p).hidden = (p !== n); });
+  }
+  function openGate() { showPane('ask'); gate.hidden = false; home.setAttribute('inert', ''); document.getElementById('gate-yes').focus(); }
+  function closeGate() { gate.hidden = true; home.removeAttribute('inert'); }
+
+  // Photos accepted: show them, confirm, then submit
+  var MAX_PHOTOS = 10;
+  function shrink(canvas) {
+    var k = Math.min(1, 1280 / Math.max(canvas.width, canvas.height));
+    var sm = document.createElement('canvas'); sm.width = Math.round(canvas.width * k); sm.height = Math.round(canvas.height * k);
+    sm.getContext('2d').drawImage(canvas, 0, 0, sm.width, sm.height);
+    return sm;
+  }
+  function acceptPhotos(canvases) {
+    var st = document.getElementById('check-status'), th = document.getElementById('thumbs');
+    th.innerHTML = ''; photosB64 = [];
+    canvases.forEach(function (cv) {
+      var sm = shrink(cv);
+      photosB64.push(sm.toDataURL('image/jpeg', 0.7).split(',')[1] || '');
+      var im = document.createElement('img'); im.alt = 'Your photo'; im.src = sm.toDataURL('image/jpeg', 0.5);
+      th.appendChild(im);
+    });
+    document.getElementById('check-spin').hidden = true;
+    st.className = 'cam-status';
+    st.textContent = canvases.length + (canvases.length === 1 ? ' photo selected.' : ' photos selected.') + ' Tap Send photos to submit.';
+    document.getElementById('check-actions').hidden = false;
+    document.getElementById('add-photos').hidden = canvases.length >= MAX_PHOTOS;
+    document.getElementById('send-photos').disabled = false;
+    document.getElementById('send-photos').focus();
+  }
+
+  // "I have taken the photos" opens the gallery picker; "I will go back" simply closes the popup
+  document.getElementById('gate-yes').addEventListener('click', function () { showPane('cam'); camStatus.textContent = ''; });
+  document.getElementById('gate-no').addEventListener('click', closeGate);
+  // Opens one photo and shrinks it straight away (max 1280px), so only one full-size image is ever in memory
+  function loadSmall(file) {
+    function toSmall(src, w, h) {
+      var k = Math.min(1, 1280 / Math.max(w, h));
+      var c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k));
+      c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
+      return c;
+    }
+    function viaImg() {
+      return new Promise(function (res, rej) {
+        var u = URL.createObjectURL(file), im = new Image();
+        im.onload = function () {
+          try { var c = toSmall(im, im.naturalWidth, im.naturalHeight); URL.revokeObjectURL(u); res(c); }
+          catch (e) { URL.revokeObjectURL(u); rej(e); }
+        };
+        im.onerror = function () { URL.revokeObjectURL(u); rej(new Error('decode')); };
+        im.src = u;
+      });
+    }
+    return viaImg().catch(function () {
+      if (!window.createImageBitmap) throw new Error('unsupported');
+      return createImageBitmap(file).then(function (bmp) {
+        var c = toSmall(bmp, bmp.width, bmp.height); if (bmp.close) bmp.close(); return c;
+      });
+    });
+  }
+  var galBtn = document.getElementById('cam-gallery'), galIn = document.getElementById('gallery-input');
+  var kept = [], addMode = false;
+  galBtn.addEventListener('click', function () { addMode = false; kept = []; galIn.value = ''; galIn.click(); });
+  document.getElementById('add-photos').addEventListener('click', function () { addMode = true; galIn.value = ''; galIn.click(); });
+  galIn.addEventListener('change', async function () {
+    var files = Array.prototype.slice.call(galIn.files || []);
+    if (!files.length) return;
+    function bad(t) { camStatus.className = 'cam-status bad'; camStatus.textContent = t; }
+    var base = addMode ? kept.slice() : [];
+    if (base.length + files.length > MAX_PHOTOS) {
+      var room = MAX_PHOTOS - base.length;
+      var msg = base.length ? ('You can add only ' + room + ' more photo' + (room === 1 ? '' : 's') + ' (maximum ' + MAX_PHOTOS + ').') : ('Please choose up to ' + MAX_PHOTOS + ' photos.');
+      if (base.length) { var st0 = document.getElementById('check-status'); st0.className = 'cam-status bad'; st0.textContent = msg; return; }
+      return bad(msg);
+    }
+    // show the popup straight away with a spinner while the photos are loaded
+    if (!base.length) document.getElementById('thumbs').innerHTML = '';
+    document.getElementById('check-actions').hidden = true;
+    document.getElementById('check-spin').hidden = false;
+    document.getElementById('send-photos').disabled = true;
+    var cs = document.getElementById('check-status'); cs.className = 'cam-status'; cs.textContent = 'Uploading photos\u2026 please wait';
+    showPane('check');
+    // Photos that cannot be opened are skipped; every photo that can be opened is kept
+    var canvases = base.slice(), skipped = [];
+    for (var j = 0; j < files.length; j++) {
+      cs.textContent = 'Uploading photo ' + (j + 1) + ' of ' + files.length + '\u2026 please wait';
+      try { canvases.push(await loadSmall(files[j])); }
+      catch (e) { skipped.push((files[j] && files[j].name) || ('photo ' + (j + 1))); }
+    }
+    if (canvases.length === base.length) {
+      // nothing new could be opened
+      var errTxt = (files.length === 1 ? 'Could not open the photo' : 'Could not open any of the photos') + ' (' + skipped.join(', ') + '). Please retake or choose different photos, then try again.';
+      if (base.length) { kept = base; acceptPhotos(base); var st1 = document.getElementById('check-status'); st1.className = 'cam-status bad'; st1.textContent = errTxt; return; }
+      showPane('cam'); bad(errTxt); return;
+    }
+    kept = canvases;
+    acceptPhotos(canvases);
+    if (skipped.length) {
+      var st2 = document.getElementById('check-status'); st2.className = 'cam-status bad';
+      st2.textContent = canvases.length + (canvases.length === 1 ? ' photo' : ' photos') + ' ready. Could not open ' + skipped.length + ' (' + skipped.join(', ') + '), so ' + (skipped.length === 1 ? 'it was' : 'they were') + ' left out. Tap Send photos to submit the rest.';
+    }
+  });
+  document.getElementById('cam-cancel').addEventListener('click', closeGate);
+  document.getElementById('check-cancel').addEventListener('click', closeGate);
+  document.getElementById('send-photos').addEventListener('click', function () {
+    if (this.disabled) return;
+    Array.prototype.forEach.call(document.querySelectorAll('#pane-check button'), function (b) { b.disabled = true; });
+    this.textContent = 'Sending\u2026';
+    document.getElementById('check-spin').hidden = false;
+    var cs = document.getElementById('check-status'); cs.className = 'cam-status'; cs.textContent = 'Sending your photos and scores\u2026 please wait';
+    verifiedOnce = true;
+    proceedSubmit(true);
+  });
+  document.getElementById('done-view').addEventListener('click', function () { closeGate(); showView(true); });
+  document.getElementById('check-retake').addEventListener('click', function () { kept = []; addMode = false; showPane('cam'); camStatus.textContent = ''; });
+
+  // Submit button: unanswered-question check first, then the "take photos" notice
+  btn.addEventListener('click', function () {
+    if (resultSent) return;
+    var keys = Object.keys(KEY), missing = false;
+    keys.forEach(function (k) { if (!answered(k)) missing = true; });
+    if (missing) { proceedSubmit(false); return; } // shows the usual "answer every question" warning
+    openGate();
+  });
+
+  function proceedSubmit(verified) {
+    if (resultSent) return;
+    var keys = Object.keys(KEY), score = 0, unanswered = [], ok = [], revise = [], res = {};
+    keys.forEach(function (k, idx) {
+      var label = 'Q' + (idx + 1) + ' ' + TOPICS[idx];
+      if (!answered(k)) { unanswered.push(idx + 1); return; }
+      if (isRight(k)) { score++; ok.push(label); res['q' + (idx + 1)] = 'Correct'; }
+      else { revise.push(label); res['q' + (idx + 1)] = 'Wrong'; }
+    });
+    if (unanswered.length) {
+      setMsg('', '');
+      var firstMissed = document.querySelector('input[name="' + keys[unanswered[0] - 1] + '"]');
+      showWarn('Please answer the Now You Try part of question ' + unanswered.join(', ') + ' before submitting.',
+               firstMissed ? firstMissed.closest('.try') : null);
+      return;
+    }
+    var total = keys.length;
+    var name = document.getElementById('s-name').value.trim();
+    var cls = document.getElementById('s-class').value.trim();
+    var phone = document.getElementById('s-phone').value.trim();
+    resultSent = true;
+    btn.disabled = true;
+    finalElapsed = Date.now() - startT;
+    var secs = Math.max(0, Math.round(finalElapsed / 1000));
+    var payload = {
+      name: name,
+      class: cls, Class: cls, className: cls, studentClass: cls,
+      phone: phone, Phone: phone,
+      quiz: QUIZ_NAME,
+      score: String(score),
+      total: String(total),
+      percentage: (total ? (score / total) * 100 : 0).toFixed(1),
+      timeTaken: String(secs),
+      timeFormatted: fmtPlain(secs),
+      q1: res.q1, q2: res.q2, q3: res.q3, q4: res.q4, q5: res.q5,
+      q6: res.q6, q7: res.q7, q8: res.q8, q9: res.q9, q10: res.q10,
+      topicsCorrect: ok.join(', '),
+      topicsRevise: revise.join(', '),
+      photoAttached: verifiedOnce ? 'Yes' : 'No',
+      photoCount: String(photosB64.length)
+    };
+    var base = (name + '_' + cls + '_' + phone).replace(/[^\w\-]+/g, '_');
+    photosB64.forEach(function (b64, i) {
+      payload['photoName' + (i + 1)] = base + (photosB64.length > 1 ? '_p' + (i + 1) : '') + '.jpg';
+      payload['photoData' + (i + 1)] = b64;
+    });
+    submitResult(payload, function () {
+      setMsg('Homework submitted, ' + name + '. Score: ' + score + ' / ' + total + '. Your scores and homework photos have been sent to your math teacher.', 'good');
+      viewBtn.hidden = false;
+      renderResults(name, cls, score, total); // after the upload, so the rankings include this submission
+      document.getElementById('check-spin').hidden = true;
+      var sb = document.getElementById('send-photos'); sb.disabled = true; sb.textContent = '\u2713 Sent'; sb.classList.add('sent');
+      showPane('done');
+      document.getElementById('done-view').focus();
+    });
+  }
+})();
+</script>
